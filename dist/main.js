@@ -15,7 +15,7 @@
   \************************************/
 /***/ ((module) => {
 
-eval("class DOMNodeCollection{\n    constructor(array){\n        this.array = array;\n    }\n}\n\nmodule.exports = DOMNodeCollection\n\n//# sourceURL=webpack:///./src/dom_node_collection.js?");
+eval("class DOMNodeCollection{\n    constructor(array){\n        this.nodes = array;\n    }\n\n    html(str) {\n        if (str !== 'undefined') {\n            this.nodes.map(node => node.innerHTML = str);  \n        } else {\n            return this.nodes[0].innerHTML;\n        }\n    }\n\n    empty() {\n        this.html('');\n    }\n\n    append(arg) {\n        if (arg instanceof DOMNodeCollection) {\n            this.html(`${arg.outerHTML}`);\n        } else if (typeof arg === \"string\") {\n            this.html(arg);\n        }     \n    }\n\n\n\n}\n\nmodule.exports = DOMNodeCollection;\n\n//# sourceURL=webpack:///./src/dom_node_collection.js?");
 
 /***/ })
 
@@ -49,7 +49,7 @@ eval("class DOMNodeCollection{\n    constructor(array){\n        this.array = ar
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection.js */ \"./src/dom_node_collection.js\")\n\nwindow.$l = $l\n\nfunction $l(arg){\n    // switch (arg){\n    //     case arg instanceof String :\n            debugger;\n            let nodeList = document.querySelectorAll(arg);\n            debugger\n            const array = Array.from(nodeList)\n            debugger\n            return array\n            // break;\n\n    // }\n}\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection.js */ \"./src/dom_node_collection.js\")\n\nwindow.$l = $l\n\n// let el = document.getElementById(\"headerId\")\n\nfunction $l(arg){\n    if (arg instanceof HTMLElement) {\n        debugger;\n        const html = new DOMNodeCollection([arg]);\n        return html;\n    } else if (typeof arg === \"string\") {\n        debugger;\n        let cssNode = document.querySelectorAll(arg);\n        const cssArray = Array.from(cssNode);\n        // return cssArray;\n        const css = new DOMNodeCollection(cssArray);\n        return css;\n    }           \n}\n\n//# sourceURL=webpack:///./src/index.js?");
 })();
 
 /******/ })()
